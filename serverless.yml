@@ -30,3 +30,6 @@ functions:
       - http:
           path: register
           method: post
+      - http:
+          path: login
+          method: post

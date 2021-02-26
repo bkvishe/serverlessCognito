@@ -1,5 +1,6 @@
 {
     "httpMethod": "POST",
+    "path": "/register",
     "name": "Bharat",
     "gender": "male",
     "address": "Mumbai",

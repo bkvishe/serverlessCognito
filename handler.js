@@ -1,25 +1,51 @@
 import { registerUser } from './register.js';
+import { loginUser } from './login.js';
 
 export const users = async (event, context) => {
 
-  //console.log(event);
+  let response = {};
 
-  registerUser(event).then(result => {
+  if(event.path === '/register' && event.httpMethod === 'POST') {
+    registerUser(event).then(result => {
 
-    //console.log(result, 'handler.js');
+      //console.log(result, 'handler.js');
 
-    return {
-      statusCode: 200,
-      body: result,
-    };
-  })
-  .catch(error => {
+      response = {
+        statusCode: 200,
+        body: result,
+      };
+    })
+    .catch(error => {
 
-    //console.log(error, 'handle.js');
+      //console.log(error, 'handle.js');
 
-    return {
-      statusCode: 500,
-      body: error,
-    };
-  });
+      response = {
+        statusCode: 500,
+        body: error,
+      };
+    });
+  }
+  else if(event.path === '/login' && event.httpMethod === 'POST') {
+
+    loginUser(event).then(result => {
+
+      console.log(result, 'handler.js');
+
+      response = {
+        statusCode: 200,
+        body: JSON.stringify(result, null, 2),
+      };
+    })
+    .catch(error => {
+
+      //console.log(error, 'handle.js');
+
+      response = {
+        statusCode: 500,
+        body: error,
+      };
+    });
+  }
+
+  return response;
 };
