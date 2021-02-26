@@ -31,9 +31,9 @@ export const loginUser = (user) => {
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result) {
 
-                console.log('access token + ' + result.getAccessToken().getJwtToken());
-                console.log('id token + ' + result.getIdToken().getJwtToken());
-                console.log('refresh token + ' + result.getRefreshToken().getToken());
+                // console.log('access token + ' + result.getAccessToken().getJwtToken());
+                // console.log('id token + ' + result.getIdToken().getJwtToken());
+                // console.log('refresh token + ' + result.getRefreshToken().getToken());
 
                 return resolve({
                     access_token: result.getAccessToken().getJwtToken(),
@@ -42,7 +42,7 @@ export const loginUser = (user) => {
                 });
             },
             onFailure: function(err) {
-                console.log(err);
+                //console.log(err);
 
                 return reject(err);
             },

@@ -8,7 +8,7 @@ export const users = async (event, context) => {
   if(event.path === '/register' && event.httpMethod === 'POST') {
     registerUser(event).then(result => {
 
-      //console.log(result, 'handler.js');
+      console.log(result, 'handler.js');
 
       response = {
         statusCode: 200,
@@ -17,7 +17,7 @@ export const users = async (event, context) => {
     })
     .catch(error => {
 
-      //console.log(error, 'handle.js');
+      console.log(error, 'handle.js');
 
       response = {
         statusCode: 500,
@@ -38,13 +38,20 @@ export const users = async (event, context) => {
     })
     .catch(error => {
 
-      //console.log(error, 'handle.js');
+      console.log(error, 'handle.js');
 
       response = {
         statusCode: 500,
         body: error,
       };
     });
+  }
+  else{
+
+    response = {
+      statusCode: 404,
+      body: 'Invalid request',
+    };
   }
 
   return response;
