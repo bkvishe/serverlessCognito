@@ -1,0 +1,9 @@
+{
+    "httpMethod": "POST",
+    "name": "Bharat",
+    "gender": "male",
+    "address": "Mumbai",
+    "email": "test@test.com",
+    "phone_number": "+912345676567",
+    "password": "Sample@password123"
+}
