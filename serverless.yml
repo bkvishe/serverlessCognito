@@ -24,12 +24,24 @@ provider:
   #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
 
 functions:
-  users:
-    handler: handler.users
+   # Defines an HTTP API endpoint that calls the registerUser function in register.js
+    # - path: url path is /register
+    # - method: POST request
+  register:
+    handler: register.registerUser
     events:
       - http:
           path: register
           method: post
+  health:
+    handler: health.health
+    events:
+      - http:
+          path: health
+          method: get
+  login:
+    handler: login.loginUser
+    events:
       - http:
           path: login
           method: post

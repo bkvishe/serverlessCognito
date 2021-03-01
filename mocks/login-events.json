@@ -1,6 +1,6 @@
 {
     "httpMethod": "POST",
     "path": "/login",
-    "username": "test@test.com",
+    "username": "preet@yopmail.com",
     "password": "Sample@password123"
 }
