@@ -6,8 +6,9 @@ const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 export const loginUser = handler(async (user, context) => {
 
     return new Promise((resolve, reject) => {
-        const eventBody = JSON.parse(user.body);
 
+        const eventBody = JSON.parse(user.body);
+        //const eventBody = user;
         const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
             Username : eventBody.username,
             Password : eventBody.password,

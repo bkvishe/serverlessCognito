@@ -45,3 +45,18 @@ functions:
       - http:
           path: login
           method: post
+  changePassword:
+    handler: change-password.changePassword
+    events:
+      - http:
+          path: changePassword
+          method: post
+  forgotPassword:
+    handler: forgot-password.forgotPassword
+    events:
+      - http:
+          path: forgotPasswordTriggerCode
+          method: post
+      - http:
+          path: forgotPasswordVerifyCode
+          method: post
