@@ -1,6 +1,3 @@
-//import { RDS } from 'aws-sdk';
-
-//const request = require('request');
 const jwkToPem = require('jwk-to-pem');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
@@ -25,23 +22,25 @@ const generatePolicy = (principalId, effect, resource) => {
 
 const validateToken = async (token) => {
 
-  let response = await axios.get('https://cognito-idp.ap-south-1.amazonaws.com/ap-south-1_Jtw8tAKB4/.well-known/jwks.json');
+  const url = 'https://cognito-idp.' + process.env.AWS_REGION + '.amazonaws.com/' + process.env.USER_POOL_ID + '/.well-known/jwks.json';
+
+  let response = await axios.get(url);
 
   if (response.status === 200) {
     let pems = {};
-    var keys = response.data['keys'];
-    for(var i = 0; i < keys.length; i++) {
+    let keys = response.data['keys'];
+    for(let i = 0; i < keys.length; i++) {
         //Convert each key to PEM
-        var key_id = keys[i].kid;
-        var modulus = keys[i].n;
-        var exponent = keys[i].e;
-        var key_type = keys[i].kty;
-        var jwk = { kty: key_type, n: modulus, e: exponent};
-        var pem = jwkToPem(jwk);
+        let key_id = keys[i].kid;
+        let modulus = keys[i].n;
+        let exponent = keys[i].e;
+        let key_type = keys[i].kty;
+        let jwk = { kty: key_type, n: modulus, e: exponent};
+        let pem = jwkToPem(jwk);
         pems[key_id] = pem;
     }
     //validate the token
-    var decodedJwt = jwt.decode(token, {complete: true});
+    let decodedJwt = jwt.decode(token, {complete: true});
     if (!decodedJwt) {
         console.log("Not a valid JWT token");
         return {
@@ -49,8 +48,8 @@ const validateToken = async (token) => {
         };
     }
 
-    var kid = decodedJwt.header.kid;
-    pem = pems[kid];
+    let kid = decodedJwt.header.kid;
+    let pem = pems[kid];
     if (!pem) {
         console.log('Invalid token1');
         return {

@@ -13,6 +13,9 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
+  apiGateway:
+    restApiId: ${API_GATEWAY_ID}
+    restApiRootResourceId: ${API_GATEWAY_ROOT_ID}
   stage: dev
   region: ap-south-1
   # To load environment variables externally
@@ -53,7 +56,7 @@ functions:
       - http:
           path: changePassword
           method: post
-          authorizer: auth
+          #authorizer: auth
   forgotPassword:
     handler: forgot-password.forgotPassword
     events:
