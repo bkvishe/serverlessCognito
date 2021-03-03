@@ -27,6 +27,8 @@ functions:
    # Defines an HTTP API endpoint that calls the registerUser function in register.js
     # - path: url path is /register
     # - method: POST request
+  auth:
+    handler: auth-handler.auth
   register:
     handler: register.registerUser
     events:
@@ -51,6 +53,7 @@ functions:
       - http:
           path: changePassword
           method: post
+          authorizer: auth
   forgotPassword:
     handler: forgot-password.forgotPassword
     events:

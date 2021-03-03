@@ -1,7 +1,7 @@
 import handler from "./libs/handler-lib";
 import userPool from "./libs/cognito-lib";
-const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 
+const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 
 export const changePassword = handler(async (user, context) => {
 
