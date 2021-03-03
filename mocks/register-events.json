@@ -1,10 +1,6 @@
 {
-    "httpMethod": "POST",
-    "path": "/register",
-    "name": "Bharat",
-    "gender": "male",
-    "address": "Mumbai",
-    "email": "test@test.com",
-    "phone_number": "+912345676567",
+    "username": "bharat.vishe@successive.tech",
+    "email": "bharat.vishe@successive.tech",
+    "gender": "Male",
     "password": "Sample@password123"
 }

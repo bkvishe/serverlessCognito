@@ -1,39 +1,29 @@
+import handler from "./libs/handler-lib";
+import userPool from "./libs/cognito-lib";
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-//const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
-//const AWS = require('aws-sdk');
-//const request = require('request');
-//const jwkToPem = require('jwk-to-pem');
-//const jwt = require('jsonwebtoken');
-//global.fetch = require('node-fetch');
 
-const poolData = {
-    UserPoolId : "ap-south-1_Jtw8tAKB4",
-    ClientId : "kmlu1nc7hbie0lu7ardqpo0cg"
-};
 
-//const pool_region = 'ap-south-1';
-
-const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-
-export const loginUser = (user) => {
+export const loginUser = handler(async (user, context) => {
 
     return new Promise((resolve, reject) => {
-        var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
-            Username : user.username,
-            Password : user.password,
+
+        const eventBody = JSON.parse(user.body);
+        //const eventBody = user;
+        const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+            Username : eventBody.username,
+            Password : eventBody.password,
         });
 
-        var userData = {
-            Username : user.username,
+        const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
+            Username : eventBody.username,
             Pool : userPool
-        };
-        var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+        });
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result) {
 
-                // console.log('access token + ' + result.getAccessToken().getJwtToken());
-                // console.log('id token + ' + result.getIdToken().getJwtToken());
-                // console.log('refresh token + ' + result.getRefreshToken().getToken());
+                console.log('access token + ' + result.getAccessToken().getJwtToken());
+                console.log('id token + ' + result.getIdToken().getJwtToken());
+                console.log('refresh token + ' + result.getRefreshToken().getToken());
 
                 return resolve({
                     access_token: result.getAccessToken().getJwtToken(),
@@ -42,10 +32,8 @@ export const loginUser = (user) => {
                 });
             },
             onFailure: function(err) {
-                //console.log(err);
-
                 return reject(err);
             },
         });
     });
-};
+});

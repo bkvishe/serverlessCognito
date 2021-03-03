@@ -13,6 +13,9 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
+  apiGateway:
+    restApiId: ${API_GATEWAY_ID}
+    restApiRootResourceId: ${API_GATEWAY_ROOT_ID}
   stage: dev
   region: ap-south-1
   # To load environment variables externally
@@ -24,12 +27,42 @@ provider:
   #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
 
 functions:
-  users:
-    handler: handler.users
+   # Defines an HTTP API endpoint that calls the registerUser function in register.js
+    # - path: url path is /register
+    # - method: POST request
+  auth:
+    handler: auth-handler.auth
+  register:
+    handler: register.registerUser
     events:
       - http:
           path: register
           method: post
+  health:
+    handler: health.health
+    events:
+      - http:
+          path: health
+          method: get
+  login:
+    handler: login.loginUser
+    events:
       - http:
           path: login
+          method: post
+  changePassword:
+    handler: change-password.changePassword
+    events:
+      - http:
+          path: changePassword
+          method: post
+          #authorizer: auth
+  forgotPassword:
+    handler: forgot-password.forgotPassword
+    events:
+      - http:
+          path: forgotPasswordTriggerCode
+          method: post
+      - http:
+          path: forgotPasswordVerifyCode
           method: post
